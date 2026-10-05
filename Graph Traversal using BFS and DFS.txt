@@ -1,0 +1,75 @@
+# Graph Traversal using BFS and DFS
+
+# Read number of vertices
+n = int(input("Enter number of vertices: "))
+
+# Create adjacency list
+graph = [[] for _ in range(n)]
+
+# Read number of edges
+e = int(input("Enter number of edges: "))
+
+print("Enter the edges (u v):")
+
+for i in range(e):
+    u, v = map(int, input().split())
+    
+    # Undirected graph
+    graph[u].append(v)
+    graph[v].append(u)
+
+
+# BFS Function
+def bfs(start):
+    visited = [False] * n
+    queue = [start]
+    visited[start] = True
+
+    print("BFS Traversal:", end=" ")
+
+    while queue:
+        vertex = queue.pop(0)
+        print(vertex, end=" ")
+
+        for neighbour in graph[vertex]:
+            if not visited[neighbour]:
+                visited[neighbour] = True
+                queue.append(neighbour)
+
+    print()
+
+
+# DFS Function
+def dfs(start):
+    visited = [False] * n
+    stack = [start]
+
+    print("DFS Traversal:", end=" ")
+
+    while stack:
+        vertex = stack.pop()
+
+        if not visited[vertex]:
+            visited[vertex] = True
+            print(vertex, end=" ")
+
+            # Reverse order for proper traversal
+            for neighbour in reversed(graph[vertex]):
+                if not visited[neighbour]:
+                    stack.append(neighbour)
+
+    print()
+
+
+# Display Adjacency List
+print("\nAdjacency List:")
+for i in range(n):
+    print(i, "->", graph[i])
+
+
+# Starting vertex
+start = int(input("\nEnter starting vertex: "))
+
+# Perform BFS and DFS
+bfs(start)
+dfs(start)
